@@ -1,0 +1,10 @@
+django
+djangorestframework
+django-cors-headers
+django-environ
+djangorestframework-simplejwt
+drf-spectacular
+psycopg2-binary
+gunicorn
+sqlparse
+tzdata

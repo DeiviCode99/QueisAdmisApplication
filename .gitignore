@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+venv/
+.venv/
+.env
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+media/
+
+# Node
+node_modules/
+FRONTEND/frontend/dist/
+FRONTEND/frontend/build/
+.npm/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database dumps
+*.sql
+
+# Static files (collectstatic output)
+.opencode
+staticfiles/
+
+# Generated graph outputs
+docs/*.png
+docs/*.svg
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Session notes
+session-*.md

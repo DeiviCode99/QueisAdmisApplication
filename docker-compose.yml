@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ./BACKEND
+      target: runtime
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./BACKEND/.env
+    environment:
+      - DJANGO_DEBUG=False
+    command: gunicorn backend.wsgi --bind 0.0.0.0:8000
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./FRONTEND/frontend
+      dockerfile: ../Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
