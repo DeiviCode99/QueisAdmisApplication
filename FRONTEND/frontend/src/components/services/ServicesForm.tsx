@@ -162,48 +162,48 @@ export default function ServicesForm({ service, onSave, onCancel }: ServicesForm
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
-        <button onClick={onCancel} className="btn-icon p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg">
+        <button onClick={onCancel} className="btn-icon p-2 text-brand-400 hover:text-brand-600 hover:bg-brand-50 rounded-[12px] transition-all duration-150">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <h2 className="text-2xl font-bold text-gray-800">{service ? "Editar Servicio" : "Nuevo Servicio"}</h2>
+        <h2 className="text-2xl font-heading font-bold text-brand-800">{service ? "Editar Servicio" : "Nuevo Servicio"}</h2>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="clay-card p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Servicio *</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Nombre del Servicio *</label>
               <input type="text" name="nombre" value={formData.nombre} onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.nombre ? 'border-red-500' : 'border-gray-300'}`} />
-              {errors.nombre && <p className="text-sm text-red-600">{errors.nombre}</p>}
+                className={`clay-input ${errors.nombre ? 'clay-input-error' : ''}`} />
+              {errors.nombre && <p className="text-sm text-red-500 mt-1">{errors.nombre}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Precio *</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Precio *</label>
               <input type="number" name="precio" value={formData.precio} onChange={handleChange} step="0.01"
-                className={`w-full px-3 py-2 border rounded-lg ${errors.precio ? 'border-red-500' : 'border-gray-300'}`} />
-              {errors.precio && <p className="text-sm text-red-600">{errors.precio}</p>}
+                className={`clay-input ${errors.precio ? 'clay-input-error' : ''}`} />
+              {errors.precio && <p className="text-sm text-red-500 mt-1">{errors.precio}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Duración (minutos)</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Duración (minutos)</label>
               <input type="number" name="duracion" value={formData.duracion} readOnly
-                className="w-full px-3 py-2 border rounded-lg bg-gray-100 border-gray-300" />
-              <p className="text-xs text-gray-500 mt-1">Calculada automáticamente de los tratamientos seleccionados</p>
+                className="clay-input opacity-60 cursor-not-allowed" />
+              <p className="text-xs text-brand-400 mt-1">Calculada automáticamente de los tratamientos seleccionados</p>
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Tratamientos</label>
-              {errors.tratamientos && <p className="text-sm text-red-600 mb-1">{errors.tratamientos}</p>}
-              <button type="button" onClick={() => setShowTreatmentSelector(true)} className="mb-2 text-sm text-emerald-600 hover:underline">
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Tratamientos</label>
+              {errors.tratamientos && <p className="text-sm text-red-500 mb-1">{errors.tratamientos}</p>}
+              <button type="button" onClick={() => setShowTreatmentSelector(true)} className="mb-2 text-sm text-brand-500 hover:text-brand-700 font-medium transition-colors">
                 Ver lista de tratamientos
               </button>
               {formData.tratamientos.length > 0 && (
                 <div className="space-y-2">
                   {formData.tratamientos.map((t) => (
-                    <div key={t.id} className="flex items-center justify-between bg-gray-100 p-2 rounded-lg">
-                      <span>{t.nombre}</span>
-                      <button type="button" onClick={() => removeTreatment(t.id)} className="text-red-500 hover:text-red-700">
+                    <div key={t.id} className="flex items-center justify-between bg-brand-50/50 border border-brand-100/50 p-2.5 rounded-[12px]">
+                      <span className="text-brand-700 text-sm">{t.nombre}</span>
+                      <button type="button" onClick={() => removeTreatment(t.id)} className="text-red-400 hover:text-red-600 transition-colors">
                         <X className="w-4 h-4" />
                       </button>
                     </div>
@@ -214,28 +214,29 @@ export default function ServicesForm({ service, onSave, onCancel }: ServicesForm
           </div>
 
           {showTreatmentSelector && (
-            <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-end md:items-center justify-center modal-overlay-enter">
-              <div className="bg-white w-full max-w-md rounded-t-2xl md:rounded-lg p-6 max-h-[90vh] overflow-y-auto space-y-4 modal-enter">
-                <h3 className="text-lg font-semibold">Selecciona tratamientos</h3>
+            <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end md:items-center justify-center modal-overlay-enter">
+              <div className="clay-card w-full max-w-md rounded-t-[20px] md:rounded-[20px] p-6 max-h-[90vh] overflow-y-auto space-y-4 modal-enter">
+                <h3 className="text-lg font-heading font-semibold text-brand-800">Selecciona tratamientos</h3>
                 <div className="max-h-64 overflow-y-auto space-y-2">
                   {allTreatments.map((t) => (
-                    <label key={t.id} className="flex items-center space-x-2">
-                      <input type="checkbox" checked={selectedTreatmentIds.includes(t.id)} onChange={() => toggleTreatment(t.id)} />
-                      <span>{t.nombre}</span>
+                    <label key={t.id} className={`flex items-center space-x-3 p-2 rounded-[10px] transition-colors ${selectedTreatmentIds.includes(t.id) ? 'bg-brand-50' : 'hover:bg-brand-50/30'}`}>
+                      <input type="checkbox" checked={selectedTreatmentIds.includes(t.id)} onChange={() => toggleTreatment(t.id)}
+                        className="rounded border-brand-300 text-brand-500 focus:ring-brand-400" />
+                      <span className="text-brand-700">{t.nombre}</span>
                     </label>
                   ))}
                 </div>
-                <div className="flex justify-end space-x-2 pt-4 border-t border-gray-200">
-                  <button type="button" onClick={() => setShowTreatmentSelector(false)} className="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
-                  <button type="button" onClick={applyTreatments} className="btn px-4 py-2 bg-emerald-500 text-white hover:bg-emerald-600 rounded-lg">Aceptar</button>
+                <div className="flex justify-end space-x-2 pt-4 border-t border-brand-100">
+                  <button type="button" onClick={() => setShowTreatmentSelector(false)} className="clay-btn-secondary bg-white text-brand-600 border border-brand-200 px-4 py-2">Cancelar</button>
+                  <button type="button" onClick={applyTreatments} className="clay-btn bg-gradient-to-b from-brand-400 to-brand-500 text-white font-heading font-semibold px-4 py-2">Aceptar</button>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-            <button type="button" onClick={onCancel} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">Cancelar</button>
-            <button type="submit" className="btn px-4 py-2 bg-emerald-500 text-white hover:bg-emerald-600 rounded-lg flex items-center space-x-2">
+          <div className="flex justify-end space-x-4 pt-6 border-t border-brand-100">
+            <button type="button" onClick={onCancel} className="clay-btn-secondary bg-white text-brand-600 border border-brand-200 px-4 py-2">Cancelar</button>
+            <button type="submit" className="clay-btn bg-gradient-to-b from-brand-400 to-brand-500 text-white font-heading font-semibold px-4 py-2 flex items-center space-x-2">
               <Save className="h-4 w-4" /><span>Guardar</span>
             </button>
           </div>
