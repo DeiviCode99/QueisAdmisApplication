@@ -20,25 +20,25 @@ export default function Settings() {
       key: 'workers',
       title: 'Trabajadores',
       description: 'Administra el personal del spa',
-      icon: <UserCog className="h-6 w-6 text-emerald-500" />,
+      icon: <UserCog className="h-6 w-6 text-brand-500" />,
     },
     {
       key: 'treatments',
       title: 'Tratamientos',
       description: 'Edita y agrega tratamientos ofrecidos',
-      icon: <Stethoscope className="h-6 w-6 text-emerald-500" />,
+      icon: <Stethoscope className="h-6 w-6 text-brand-500" />,
     },
     {
       key: 'services',
-      title: 'Services',
+      title: 'Servicios',
       description: 'Configura los servicios disponibles',
-      icon: <ClipboardList className="h-6 w-6 text-emerald-500" />,
+      icon: <ClipboardList className="h-6 w-6 text-brand-500" />,
     },
     {
       key: 'snacks',
       title: 'Snacks',
-      description: 'Configura los Snacks',
-      icon: <Salad className="h-6 w-6 text-emerald-500" />,
+      description: 'Configura los aperitivos y snacks',
+      icon: <Salad className="h-6 w-6 text-brand-500" />,
     },
   ];
 
@@ -54,7 +54,7 @@ export default function Settings() {
         return <SnacksList />;
       default:
         return (
-          <div className="text-center text-gray-500 py-12">
+          <div className="text-center text-brand-500 py-12">
             Selecciona una opción de configuración para comenzar.
           </div>
         );
@@ -63,26 +63,28 @@ export default function Settings() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Configuración</h3>
+      <div className="clay-card p-8">
+        <h3 className="text-2xl font-heading font-bold text-brand-800 mb-6 text-center">Configuración</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {modules.map((mod) => (
             <div
               key={mod.key}
               onClick={() => setActiveModule(mod.key)}
-              className="cursor-pointer p-6 border border-gray-200 rounded-lg shadow hover:shadow-md hover:border-emerald-500 transition-all duration-200"
+              className="cursor-pointer p-6 rounded-[14px] border border-brand-100/50 bg-white transition-all duration-200 hover:shadow-[0_8px_24px_rgba(14,165,233,0.08),-4px_-4px_12px_rgba(255,255,255,0.7)] hover:border-brand-300/50"
             >
-              <div className="flex items-center space-x-4 mb-4">
-                {mod.icon}
-                <h4 className="text-lg font-semibold text-gray-800">{mod.title}</h4>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="bg-brand-50 p-3 rounded-[10px] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+                  {mod.icon}
+                </div>
+                <h4 className="text-lg font-heading font-semibold text-brand-800">{mod.title}</h4>
               </div>
-              <p className="text-sm text-gray-600">{mod.description}</p>
+              <p className="text-sm text-brand-500">{mod.description}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="clay-card p-6">
         {renderModule()}
       </div>
     </div>

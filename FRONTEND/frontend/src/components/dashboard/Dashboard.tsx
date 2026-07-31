@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Users, DollarSign, TrendingUp, Clock, CheckCircle, X } from 'lucide-react';
+import { Calendar, Users, DollarSign, TrendingUp, Clock, CheckCircle, X, Sparkles, Plus } from 'lucide-react';
 import StatsCard from './StatsCard';
 import { getPatients, getAppointments, getReportsList } from '../../lib/api';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
@@ -115,9 +115,13 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="animate-fade-in-up stagger-1"><StatsCard title="Total Pacientes" value={stats.totalPatients} icon={Users} color="emerald" /></div>
-        <div className="animate-fade-in-up stagger-2"><StatsCard title="Citas Hoy" value={stats.todayAppointments} icon={Calendar} color="blue" /></div>
-        <div className="animate-fade-in-up stagger-3">
+        <div className="animate-fade-in-up" style={{ animationDelay: '0ms' }}>
+          <StatsCard title="Total Pacientes" value={stats.totalPatients} icon={Users} color="brand" />
+        </div>
+        <div className="animate-fade-in-up" style={{ animationDelay: '60ms' }}>
+          <StatsCard title="Citas Hoy" value={stats.todayAppointments} icon={Calendar} color="blue" />
+        </div>
+        <div className="animate-fade-in-up" style={{ animationDelay: '120ms' }}>
           <StatsCard
             title="Ingresos del Mes"
             value={Number(stats.monthlyRevenue).toLocaleString('es-CO', {
@@ -127,45 +131,52 @@ export default function Dashboard() {
               maximumFractionDigits: 2
             })}
             icon={DollarSign}
-            color="amber"
+            color="accent"
           />
         </div>
-        <div className="animate-fade-in-up stagger-4"><StatsCard title="Tratamientos Completados" value={stats.completedTreatments} icon={CheckCircle} color="rose" /></div>
+        <div className="animate-fade-in-up" style={{ animationDelay: '180ms' }}>
+          <StatsCard title="Tratamientos Completados" value={stats.completedTreatments} icon={CheckCircle} color="rose" />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Acciones Rápidas</h3>
-          <div className="space-y-3">
+        <div className="clay-card p-6">
+          <h3 className="text-lg font-heading font-semibold text-brand-800 mb-4">Acciones Rápidas</h3>
+          <div className="grid grid-cols-3 gap-3">
             <button
-              className="btn w-full bg-emerald-500 text-white px-4 py-3 rounded-lg hover:bg-emerald-600 flex items-center space-x-2"
+              className="clay-btn py-4 bg-gradient-to-b from-brand-400 to-brand-500 text-white flex flex-col items-center gap-2"
               onClick={() => setShowAppointmentForm(true)}
             >
               <Calendar className="h-5 w-5" />
-              <span>Nueva Cita</span>
+              <span className="text-xs font-medium">Nueva Cita</span>
             </button>
             <button
-              className="btn w-full bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-600 flex items-center space-x-2"
+              className="clay-btn py-4 bg-gradient-to-b from-accent-400 to-accent-500 text-white flex flex-col items-center gap-2"
               onClick={() => setShowPatientForm(true)}
             >
               <Users className="h-5 w-5" />
-              <span>Nuevo Paciente</span>
+              <span className="text-xs font-medium">Nuevo Paciente</span>
             </button>
             <button
-              className="btn w-full bg-teal-500 text-white px-4 py-3 rounded-lg hover:bg-teal-600 flex items-center space-x-2"
+              className="clay-btn py-4 bg-gradient-to-b from-amber-400 to-amber-500 text-white flex flex-col items-center gap-2"
               onClick={() => setShowReportsModal(true)}
             >
               <TrendingUp className="h-5 w-5" />
-              <span>Ver Reportes</span>
+              <span className="text-xs font-medium">Reportes</span>
             </button>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Próximas Citas</h3>
+        <div className="clay-card p-6">
+          <h3 className="text-lg font-heading font-semibold text-brand-800 mb-4">Próximas Citas</h3>
           <div className="space-y-3">
             {upcomingAppointments.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No hay citas programadas</p>
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <div className="bg-brand-50 p-3 rounded-[12px] mb-3">
+                  <Calendar className="h-6 w-6 text-brand-400" />
+                </div>
+                <p className="text-sm text-brand-500">No hay citas programadas</p>
+              </div>
             ) : (
               upcomingAppointments.map((appointment) => {
                 const aptDate = parseISO(appointment.fecha_hora);
@@ -177,18 +188,18 @@ export default function Dashboard() {
                 return (
                   <div
                     key={appointment.id}
-                    className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-all duration-200"
+                    className="flex items-center gap-3 p-3 bg-brand-50/50 rounded-[12px] cursor-pointer hover:bg-brand-100/50 transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
                     onClick={() => setSelectedAppointment(appointment)}
                   >
-                    <div className="bg-emerald-100 p-2 rounded-full">
-                      <Clock className="h-4 w-4 text-emerald-600" />
+                    <div className="bg-white p-2.5 rounded-[10px] shadow-[inset_2px_2px_6px_rgba(14,165,233,0.04)]">
+                      <Clock className="h-4 w-4 text-brand-500" />
                     </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-800">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-brand-800 text-sm truncate">
                         {appointment.paciente?.nombres} {appointment.paciente?.apellidos}
                       </p>
-                      <p className="text-sm text-gray-600">
-                        {appointment.servicio?.nombre} - {dateLabel} {appointment.hora}
+                      <p className="text-xs text-brand-500 truncate">
+                        {appointment.servicio?.nombre} — {dateLabel} {appointment.hora}
                       </p>
                     </div>
                   </div>
@@ -200,47 +211,72 @@ export default function Dashboard() {
       </div>
 
       {selectedAppointment && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-end md:items-center justify-center modal-overlay-enter">
-          <div className="bg-white w-full max-w-lg rounded-t-2xl md:rounded-xl p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end md:items-center justify-center modal-overlay-enter">
+          <div className="clay-card w-full max-w-lg rounded-t-[20px] md:rounded-[16px] p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-brand-400 hover:text-brand-600 transition-colors"
               onClick={() => setSelectedAppointment(null)}
             >
               <X className="h-5 w-5" />
             </button>
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">Detalle de la Cita</h3>
-            <p><strong>Paciente:</strong> {selectedAppointment.paciente?.nombres} {selectedAppointment.paciente?.apellidos}</p>
-            <p><strong>Servicio:</strong> {selectedAppointment.servicio?.nombre}</p>
-            <p><strong>Colaborador:</strong> {selectedAppointment.colaborador?.nombres} {selectedAppointment.colaborador?.apellidos}</p>
-            <p><strong>Fecha:</strong> {selectedAppointment.fecha_hora}</p>
-            <p><strong>Hora:</strong> {selectedAppointment.hora}</p>
-            <p><strong>Notas:</strong> {selectedAppointment.notas || 'N/A'}</p>
+            <h3 className="text-xl font-heading font-semibold mb-4 text-brand-800">Detalle de la Cita</h3>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 p-3 bg-brand-50/50 rounded-[10px]">
+                <span className="text-sm font-medium text-brand-600 w-24 shrink-0">Paciente:</span>
+                <span className="text-sm text-brand-800">{selectedAppointment.paciente?.nombres} {selectedAppointment.paciente?.apellidos}</span>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-brand-50/50 rounded-[10px]">
+                <span className="text-sm font-medium text-brand-600 w-24 shrink-0">Servicio:</span>
+                <span className="text-sm text-brand-800">{selectedAppointment.servicio?.nombre}</span>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-brand-50/50 rounded-[10px]">
+                <span className="text-sm font-medium text-brand-600 w-24 shrink-0">Colaborador:</span>
+                <span className="text-sm text-brand-800">{selectedAppointment.colaborador?.nombres} {selectedAppointment.colaborador?.apellidos}</span>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-brand-50/50 rounded-[10px]">
+                <span className="text-sm font-medium text-brand-600 w-24 shrink-0">Fecha:</span>
+                <span className="text-sm text-brand-800">{selectedAppointment.fecha_hora}</span>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-brand-50/50 rounded-[10px]">
+                <span className="text-sm font-medium text-brand-600 w-24 shrink-0">Hora:</span>
+                <span className="text-sm text-brand-800">{selectedAppointment.hora}</span>
+              </div>
+              <div className="p-3 bg-brand-50/50 rounded-[10px]">
+                <span className="text-sm font-medium text-brand-600 block mb-1">Notas:</span>
+                <span className="text-sm text-brand-800">{selectedAppointment.notas || 'N/A'}</span>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
       {showReportsModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-end md:items-center justify-center modal-overlay-enter">
-          <div className="bg-white w-full max-w-lg rounded-t-2xl md:rounded-xl p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end md:items-center justify-center modal-overlay-enter">
+          <div className="clay-card w-full max-w-lg rounded-t-[20px] md:rounded-[16px] p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
             <button
               onClick={() => setShowReportsModal(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-brand-400 hover:text-brand-600 transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Reportes Mensuales</h2>
+            <h2 className="text-lg font-heading font-semibold text-brand-800 mb-4">Reportes Mensuales</h2>
             {reports.length === 0 ? (
-              <p className="text-gray-500">No hay reportes disponibles.</p>
+              <div className="text-center py-8">
+                <div className="bg-brand-50 p-3 rounded-[12px] inline-flex mb-3">
+                  <TrendingUp className="h-6 w-6 text-brand-400" />
+                </div>
+                <p className="text-sm text-brand-500">No hay reportes disponibles.</p>
+              </div>
             ) : (
               <ul className="space-y-2">
                 {reports.map((reporte, index) => (
-                  <li key={index} className="flex justify-between items-center border-b py-2">
-                    <span className="text-gray-700">{reporte.nombre}</span>
+                  <li key={index} className="flex justify-between items-center px-4 py-3 bg-brand-50/50 rounded-[10px]">
+                    <span className="text-sm font-medium text-brand-700">{reporte.nombre}</span>
                     <a
                       href={reporte.pdf_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-emerald-600 hover:underline text-sm"
+                      className="clay-btn text-xs px-3 py-1.5 bg-gradient-to-b from-brand-400 to-brand-500 text-white"
                     >
                       Descargar PDF
                     </a>
@@ -253,10 +289,10 @@ export default function Dashboard() {
       )}
 
       {showAppointmentForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-end md:items-center justify-center modal-overlay-enter">
-          <div className="bg-white w-full max-w-2xl rounded-t-2xl md:rounded-xl p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end md:items-center justify-center modal-overlay-enter">
+          <div className="clay-card w-full max-w-2xl rounded-t-[20px] md:rounded-[16px] p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-brand-400 hover:text-brand-600 transition-colors"
               onClick={() => setShowAppointmentForm(false)}
             >
               <X className="h-5 w-5" />
@@ -273,10 +309,10 @@ export default function Dashboard() {
       )}
 
       {showPatientForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-end md:items-center justify-center modal-overlay-enter">
-          <div className="bg-white w-full max-w-2xl rounded-t-2xl md:rounded-xl p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end md:items-center justify-center modal-overlay-enter">
+          <div className="clay-card w-full max-w-2xl rounded-t-[20px] md:rounded-[16px] p-6 max-h-[90vh] overflow-y-auto relative modal-enter">
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-brand-400 hover:text-brand-600 transition-colors"
               onClick={() => setShowPatientForm(false)}
             >
               <X className="h-5 w-5" />

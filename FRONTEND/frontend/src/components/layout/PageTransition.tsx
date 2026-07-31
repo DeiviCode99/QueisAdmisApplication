@@ -8,7 +8,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
   const location = useLocation();
 
   return (
-    <div key={location.pathname} className="animate-fade-in-up">
+    <div key={location.pathname} className="animate-clay-enter">
       {children}
     </div>
   );

@@ -222,75 +222,65 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
     }
   };
 
-  const getBgColorByEtiqueta = (code: string): string => {
-    switch (code) {
-      case 'NUV': return 'bg-yellow-50';
-      case 'ANT': return 'bg-purple-200';
-      case 'PPN': return 'bg-red-100';
-      case 'JOD': return 'bg-sky-50';
-      default: return 'bg-white';
-    }
-  };
-
   const maxBirthStr = new Date(new Date().getFullYear() - 15, new Date().getMonth(), new Date().getDate()).toISOString().split('T')[0];
 
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
-        <button onClick={onCancel} className="btn-icon p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg">
+        <button onClick={onCancel} className="btn-icon p-2 text-brand-400 hover:text-brand-600 hover:bg-brand-50 rounded-[12px] transition-all duration-150">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-heading font-bold text-brand-800">
           {patient ? 'Editar Paciente' : 'Nuevo Paciente'}
         </h2>
       </div>
 
-      <div className={`${getBgColorByEtiqueta(formData.etiquetas_pac)} rounded-xl shadow-sm border border-gray-100 p-6`}>
+      <div className="clay-card p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Información Personal</h3>
+            <h3 className="text-lg font-heading font-semibold text-brand-700 mb-4">Información Personal</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nombres *</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Nombres *</label>
                 <input
                   type="text" name="nombres" value={formData.nombres} onChange={handleChange}
                   pattern="[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+"
                   title="Solo letras y espacios"
-                  className={`w-full px-3 py-2 border rounded-lg ${errors.nombres ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`clay-input ${errors.nombres ? 'clay-input-error' : ''}`}
                 />
-                {errors.nombres && <p className="text-sm text-red-600 mt-1">{errors.nombres}</p>}
+                {errors.nombres && <p className="text-sm text-red-500 mt-1">{errors.nombres}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Apellidos *</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Apellidos *</label>
                 <input
                   type="text" name="apellidos" value={formData.apellidos} onChange={handleChange}
                   pattern="[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+"
                   title="Solo letras y espacios"
-                  className={`w-full px-3 py-2 border rounded-lg ${errors.apellidos ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`clay-input ${errors.apellidos ? 'clay-input-error' : ''}`}
                 />
-                {errors.apellidos && <p className="text-sm text-red-600 mt-1">{errors.apellidos}</p>}
+                {errors.apellidos && <p className="text-sm text-red-500 mt-1">{errors.apellidos}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Documento</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Tipo de Documento</label>
                 <select name="tipo_documento" value={formData.tipo_documento} onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-lg ${errors.tipo_documento ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`clay-input ${errors.tipo_documento ? 'clay-input-error' : ''}`}
                 >
                   <option value="">Selecciona un tipo</option>
                   {documentTypes.map((tipo) => (
                     <option key={tipo.codigo} value={tipo.codigo}>{tipo.nombre}</option>
                   ))}
                 </select>
-                {errors.tipo_documento && <p className="text-sm text-red-600 mt-1">{errors.tipo_documento}</p>}
+                {errors.tipo_documento && <p className="text-sm text-red-500 mt-1">{errors.tipo_documento}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Etiqueta</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Etiqueta</label>
                 <select name="etiquetas_pac" value={formData.etiquetas_pac} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  className="clay-input"
                 >
                   <option value="">Selecciona una etiqueta</option>
                   {labelPatients.map((tipo) => (
@@ -300,99 +290,99 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Número de Documento</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Número de Documento</label>
                 <input
                   type="text" name="numero_documento" value={formData.numero_documento} onChange={handleChange}
                   maxLength={10} pattern="[0-9]*" inputMode="numeric"
                   title="Solo números, máximo 10 dígitos"
-                  className={`w-full px-3 py-2 border rounded-lg ${errors.numero_documento ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`clay-input ${errors.numero_documento ? 'clay-input-error' : ''}`}
                 />
-                {errors.numero_documento && <p className="text-sm text-red-600 mt-1">{errors.numero_documento}</p>}
+                {errors.numero_documento && <p className="text-sm text-red-500 mt-1">{errors.numero_documento}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Fecha de Nacimiento</label>
                 <input
                   type="date" name="fecha_nacimiento" value={formData.fecha_nacimiento} onChange={handleChange}
                   max={maxBirthStr}
-                  className={`w-full px-3 py-2 border rounded-lg ${errors.fecha_nacimiento ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`clay-input ${errors.fecha_nacimiento ? 'clay-input-error' : ''}`}
                 />
-                {errors.fecha_nacimiento && <p className="text-sm text-red-600 mt-1">{errors.fecha_nacimiento}</p>}
+                {errors.fecha_nacimiento && <p className="text-sm text-red-500 mt-1">{errors.fecha_nacimiento}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Celular *</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Celular *</label>
                 <input
                   type="tel" name="celular" value={formData.celular} onChange={handleChange}
                   maxLength={10} pattern="[0-9]*" inputMode="numeric"
                   title="Solo números"
-                  className={`w-full px-3 py-2 border rounded-lg ${errors.celular ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`clay-input ${errors.celular ? 'clay-input-error' : ''}`}
                 />
-                {errors.celular && <p className="text-sm text-red-600 mt-1">{errors.celular}</p>}
+                {errors.celular && <p className="text-sm text-red-500 mt-1">{errors.celular}</p>}
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Dirección</label>
                 <input
                   type="text" name="direccion" value={formData.direccion} onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  className="clay-input"
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Contacto de Emergencia</h3>
+            <h3 className="text-lg font-heading font-semibold text-brand-700 mb-4">Contacto de Emergencia</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Nombre</label>
                 <input
                   type="text" name="emergencia_nombre" value={formData.emergencia_nombre} onChange={handleChange}
                   pattern="[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+"
                   title="Solo letras y espacios"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  className="clay-input"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Celular</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Celular</label>
                 <input
                   type="tel" name="emergencia_number" value={formData.emergencia_number} onChange={handleChange}
                   maxLength={10} pattern="[0-9]*" inputMode="numeric"
                   title="Solo números"
-                  className={`w-full px-3 py-2 border rounded-lg ${errors.emergencia_number ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`clay-input ${errors.emergencia_number ? 'clay-input-error' : ''}`}
                 />
-                {errors.emergencia_number && <p className="text-sm text-red-600 mt-1">{errors.emergencia_number}</p>}
+                {errors.emergencia_number && <p className="text-sm text-red-500 mt-1">{errors.emergencia_number}</p>}
               </div>
             </div>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Información Médica</h3>
+            <h3 className="text-lg font-heading font-semibold text-brand-700 mb-4">Información Médica</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Condiciones Médicas</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Condiciones Médicas</label>
                 <textarea name="condiciones_medicas" value={formData.condiciones_medicas} onChange={handleChange} rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  className="clay-input"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Alergias</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Alergias</label>
                 <textarea name="alergias" value={formData.alergias} onChange={handleChange} rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  className="clay-input"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Extras</label>
+                <label className="block text-sm font-medium text-brand-700 mb-1.5">Extras</label>
                 <div className="flex space-x-2 mb-2">
                   <input
                     type="text" value={newExtra} onChange={(e) => setNewExtra(e.target.value)}
                     onKeyDown={handleExtraKeyDown}
                     placeholder="Escribe una nota y presiona Enter o +"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg"
+                    className="clay-input flex-1"
                   />
                   <button type="button" onClick={handleAddExtra}
-                    className="btn px-3 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 flex items-center justify-center"
+                    className="clay-btn bg-gradient-to-b from-brand-400 to-brand-500 text-white px-3 py-2 flex items-center justify-center"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
@@ -400,10 +390,10 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
                 {Array.isArray(formData.extras) && formData.extras.length > 0 && (
                   <ul className="space-y-2">
                     {formData.extras.map((extra, index) => (
-                      <li key={index} className="flex justify-between items-center bg-gray-50 border px-3 py-2 rounded-lg">
-                        <span>{extra}</span>
+                      <li key={index} className="flex justify-between items-center bg-brand-50/50 border border-brand-100/50 px-3 py-2 rounded-[12px]">
+                        <span className="text-brand-700">{extra}</span>
                         <button type="button" onClick={() => handleRemoveExtra(index)}
-                          className="text-red-500 hover:text-red-700 text-sm">Eliminar</button>
+                          className="text-red-400 hover:text-red-600 text-sm font-medium transition-colors">Eliminar</button>
                       </li>
                     ))}
                   </ul>
@@ -412,13 +402,13 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
             </div>
           </div>
 
-          <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+          <div className="flex justify-end space-x-4 pt-6 border-t border-brand-100">
             <button type="button" onClick={onCancel}
-              className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg">
+              className="clay-btn-secondary bg-white text-brand-600 border border-brand-200 px-4 py-2">
               Cancelar
             </button>
             <button type="submit"
-              className="btn px-4 py-2 bg-emerald-500 text-white hover:bg-emerald-600 rounded-lg flex items-center space-x-2">
+              className="clay-btn bg-gradient-to-b from-brand-400 to-brand-500 text-white font-heading font-semibold px-4 py-2 flex items-center space-x-2">
               <Save className="h-4 w-4" />
               <span>Guardar</span>
             </button>

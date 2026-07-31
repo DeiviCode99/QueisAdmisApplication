@@ -243,26 +243,26 @@ export default function AppointmentForm({ appointment, onSave, onCancel }: Appoi
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
-        <button onClick={onCancel} className="btn-icon p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg">
+        <button onClick={onCancel} className="btn-icon p-2 text-brand-400 hover:text-brand-600 hover:bg-brand-50 rounded-[12px] transition-all duration-150">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-heading font-bold text-brand-800">
           {appointment ? (isReadOnly ? 'Ver Cita' : 'Editar Cita') : 'Nueva Cita'}
         </h2>
         {isReadOnly && (
-          <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full font-medium">Solo lectura</span>
+          <span className="clay-badge bg-amber-100 text-amber-700">Solo lectura</span>
         )}
         {isRETR && (
-          <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium">Atrasada — editable</span>
+          <span className="clay-badge bg-orange-100 text-orange-700">Atrasada — editable</span>
         )}
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="clay-card p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             <div className="relative">
-              <label className="block mb-1 text-sm font-medium text-gray-700">Paciente</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Paciente</label>
               <input
                 type="text"
                 placeholder="Buscar paciente por nombre..."
@@ -270,12 +270,12 @@ export default function AppointmentForm({ appointment, onSave, onCancel }: Appoi
                 onChange={handlePatientSearch}
                 onFocus={() => setShowSuggestions(true)}
                 readOnly={isReadOnly}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.paciente_id ? 'border-red-500' : 'border-gray-300'} ${isReadOnly ? 'bg-gray-100' : ''}`}
+                className={`clay-input ${errors.paciente_id ? 'clay-input-error' : ''} ${isReadOnly ? 'opacity-60 cursor-not-allowed' : ''}`}
               />
-              {errors.paciente_id && <p className="text-sm text-red-600">{errors.paciente_id}</p>}
+              {errors.paciente_id && <p className="text-sm text-red-500 mt-1">{errors.paciente_id}</p>}
 
               {showSuggestions && query && filteredPatients.length > 0 && (
-                <ul className="absolute z-10 bg-white border border-gray-300 mt-1 rounded-lg max-h-48 overflow-y-auto w-full shadow">
+                <ul className="absolute z-10 clay-card mt-2 max-h-48 overflow-y-auto w-full py-1">
                   {filteredPatients.map((p) => (
                     <li
                       key={p.id}
@@ -285,7 +285,7 @@ export default function AppointmentForm({ appointment, onSave, onCancel }: Appoi
                         setQuery(`${p.nombres} ${p.apellidos}`);
                         setShowSuggestions(false);
                       }}
-                      className="px-3 py-2 cursor-pointer hover:bg-emerald-100"
+                      className="px-4 py-2 cursor-pointer text-brand-700 hover:bg-brand-50 transition-colors"
                     >
                       {p.nombres} {p.apellidos}
                     </li>
@@ -295,13 +295,13 @@ export default function AppointmentForm({ appointment, onSave, onCancel }: Appoi
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Colaborador</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Colaborador</label>
               <select
                 name="colaborador_id"
                 value={formData.colaborador_id}
                 onChange={handleChange}
                 disabled={isReadOnly}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.colaborador_id ? 'border-red-500' : 'border-gray-300'} ${isReadOnly ? 'bg-gray-100' : ''}`}
+                className={`clay-input ${errors.colaborador_id ? 'clay-input-error' : ''} ${isReadOnly ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 <option value="">Selecciona un colaborador</option>
                 {workers.map((w) => (
@@ -310,17 +310,17 @@ export default function AppointmentForm({ appointment, onSave, onCancel }: Appoi
                   </option>
                 ))}
               </select>
-              {errors.colaborador_id && <p className="text-sm text-red-600">{errors.colaborador_id}</p>}
+              {errors.colaborador_id && <p className="text-sm text-red-500 mt-1">{errors.colaborador_id}</p>}
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Servicio</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Servicio</label>
               <select
                 name="servicio_id"
                 value={formData.servicio_id}
                 onChange={handleChange}
                 disabled={isReadOnly}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.servicio_id ? 'border-red-500' : 'border-gray-300'} ${isReadOnly ? 'bg-gray-100' : ''}`}
+                className={`clay-input ${errors.servicio_id ? 'clay-input-error' : ''} ${isReadOnly ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 <option value="">Selecciona un servicio</option>
                 {services.map((s) => (
@@ -329,40 +329,40 @@ export default function AppointmentForm({ appointment, onSave, onCancel }: Appoi
                   </option>
                 ))}
               </select>
-              {errors.servicio_id && <p className="text-sm text-red-600">{errors.servicio_id}</p>}
+              {errors.servicio_id && <p className="text-sm text-red-500 mt-1">{errors.servicio_id}</p>}
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Aperitivos</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Aperitivos</label>
               <div className="space-y-2">
                 {snacks.map((snack) => (
-                  <label key={snack.id} className="flex items-center space-x-2">
+                  <label key={snack.id} className={`flex items-center space-x-3 p-2 rounded-[10px] transition-colors ${formData.aperitivos.includes(snack.id) ? 'bg-brand-50' : 'hover:bg-brand-50/30'}`}>
                     <input
                       type="checkbox"
                       checked={formData.aperitivos.includes(snack.id)}
                       onChange={() => handleSnackToggle(snack.id)}
                       disabled={isReadOnly}
-                      className="rounded border-gray-300"
+                      className="rounded border-brand-300 text-brand-500 focus:ring-brand-400"
                     />
-                    <span>{snack.nombre} (${snack.precio})</span>
+                    <span className="text-brand-700 text-sm">{snack.nombre} (${snack.precio})</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Precio</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Precio</label>
               <input
                 type="text"
                 name="saldo_pend"
                 value={formData.saldo_pend}
                 readOnly
-                className="w-full px-3 py-2 border rounded-lg bg-gray-100 border-gray-300"
+                className="clay-input opacity-60 cursor-not-allowed"
               />
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Fecha</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Fecha</label>
               <input
                 type="date"
                 name="fecha_hora"
@@ -370,43 +370,43 @@ export default function AppointmentForm({ appointment, onSave, onCancel }: Appoi
                 onChange={handleChange}
                 min={appointment ? undefined : todayStr}
                 readOnly={isReadOnly}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.fecha_hora ? 'border-red-500' : 'border-gray-300'} ${isReadOnly ? 'bg-gray-100' : ''}`}
+                className={`clay-input ${errors.fecha_hora ? 'clay-input-error' : ''} ${isReadOnly ? 'opacity-60 cursor-not-allowed' : ''}`}
               />
-              {errors.fecha_hora && <p className="text-sm text-red-600">{errors.fecha_hora}</p>}
+              {errors.fecha_hora && <p className="text-sm text-red-500 mt-1">{errors.fecha_hora}</p>}
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Hora</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Hora</label>
               <input
                 type="time"
                 name="hora"
                 value={formData.hora}
                 onChange={handleChange}
                 readOnly={isReadOnly}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.hora ? 'border-red-500' : 'border-gray-300'} ${isReadOnly ? 'bg-gray-100' : ''}`}
+                className={`clay-input ${errors.hora ? 'clay-input-error' : ''} ${isReadOnly ? 'opacity-60 cursor-not-allowed' : ''}`}
               />
-              {errors.hora && <p className="text-sm text-red-600">{errors.hora}</p>}
+              {errors.hora && <p className="text-sm text-red-500 mt-1">{errors.hora}</p>}
             </div>
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Notas</label>
+            <label className="block text-sm font-medium text-brand-700 mb-1.5">Notas</label>
             <textarea
               name="notas"
               value={formData.notas}
               onChange={handleChange}
               readOnly={isReadOnly}
-              className={`w-full px-3 py-2 border rounded-lg border-gray-300 ${isReadOnly ? 'bg-gray-100' : ''}`}
+              className={`clay-input ${isReadOnly ? 'opacity-60 cursor-not-allowed' : ''}`}
               rows={3}
             />
           </div>
 
-          <div className="flex justify-end gap-4">
-            <button type="button" onClick={onCancel} className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg">
+          <div className="flex justify-end gap-4 pt-6 border-t border-brand-100">
+            <button type="button" onClick={onCancel} className="clay-btn-secondary bg-white text-brand-600 border border-brand-200 px-4 py-2">
               Cancelar
             </button>
             {!isReadOnly && (
-              <button type="submit" className="btn px-4 py-2 bg-emerald-500 text-white hover:bg-emerald-600 rounded-lg flex items-center space-x-2">
+              <button type="submit" className="clay-btn bg-gradient-to-b from-brand-400 to-brand-500 text-white font-heading font-semibold px-4 py-2 flex items-center space-x-2">
                 <Save className="h-4 w-4" />
                 <span>Guardar</span>
               </button>

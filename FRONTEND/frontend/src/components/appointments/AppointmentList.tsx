@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, Plus, Edit, CheckCircle, XCircle } from 'lucide-react';
+import { Calendar, Clock, Plus, Edit, CheckCircle, XCircle, Filter } from 'lucide-react';
 import { getAppointments, updateAppointment, getAppointmentStatuses } from '../../lib/api';
 import AppointmentForm from './AppointmentForm';
 import Skeleton from '../ui/Skeleton';
@@ -47,11 +47,11 @@ interface AppointmentStatus {
   label: string;
 }
 
-const STATUS_COLORS: Record<string, string> = {
-  PEND: 'bg-yellow-100 text-yellow-800',
-  REAL: 'bg-emerald-100 text-emerald-800',
-  CANC: 'bg-red-100 text-red-800',
-  RETR: 'bg-orange-100 text-orange-800',
+const STATUS_STYLES: Record<string, string> = {
+  PEND: 'bg-amber-50 text-amber-700 border-amber-200',
+  REAL: 'bg-accent-50 text-accent-700 border-accent-200',
+  CANC: 'bg-red-50 text-red-700 border-red-200',
+  RETR: 'bg-orange-50 text-orange-700 border-orange-200',
 };
 
 const ITEMS_PER_PAGE = 10;
@@ -180,18 +180,22 @@ export default function AppointmentList() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-xl border shadow-sm sticky top-0 z-10">
+      <div className="clay-card p-6 sticky top-0 z-10">
         <div className="flex flex-col sm:flex-row justify-between gap-4">
-          <div className="flex gap-4 items-center">
-            <input type="date" value={selectedDate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedDate(e.target.value)} className="border px-3 py-2 rounded-lg" />
-            <select value={statusFilter} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value)} className="border px-3 py-2 rounded-lg">
+          <div className="flex gap-3 items-center">
+            <div className="relative">
+              <input type="date" value={selectedDate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedDate(e.target.value)}
+                className="clay-input py-2 px-3 text-sm" />
+            </div>
+            <select value={statusFilter} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value)}
+              className="clay-input py-2 px-3 text-sm">
               <option value="all">Todos</option>
               {appointmentStatuses.map((status) => (
                 <option key={status.value} value={status.value}>{status.label}</option>
               ))}
             </select>
           </div>
-          <button onClick={handleNewAppointment} className="btn bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+          <button onClick={handleNewAppointment} className="clay-btn px-4 py-2 bg-gradient-to-b from-brand-400 to-brand-500 text-white flex items-center gap-2">
             <Plus className="h-5 w-5" /> Nueva Cita
           </button>
         </div>
@@ -203,42 +207,44 @@ export default function AppointmentList() {
         </div>
       ) : filteredAppointments.length === 0 ? (
         <EmptyState icon={Calendar} title="No hay citas registradas" description="Crea una nueva cita para comenzar" action={
-          <button onClick={handleNewAppointment} className="btn bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600">Nueva Cita</button>
+          <button onClick={handleNewAppointment} className="clay-btn px-4 py-2 bg-gradient-to-b from-brand-400 to-brand-500 text-white">Nueva Cita</button>
         } />
       ) : (
         <>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 divide-y max-h-[calc(100vh-220px)] overflow-y-auto">
+          <div className="clay-card divide-y divide-brand-50 max-h-[calc(100vh-220px)] overflow-y-auto">
             {paginatedAppointments.map((appt) => (
-              <div key={appt.id} className="p-4 flex justify-between items-center hover:bg-brand-50">
-                <div className="flex flex-col gap-1">
-                  <h3 className="font-semibold text-gray-800">{appt.paciente?.nombres} {appt.paciente?.apellidos}</h3>
-                  <p className="text-sm text-gray-600">{appt.servicio?.nombre || 'Servicio'}</p>
-                  <div className="text-sm text-gray-600 flex items-center gap-3">
-                    <Calendar className="h-4 w-4" /> {appt.fecha_hora}
-                    <Clock className="h-4 w-4" /> {appt.hora}
+              <div key={appt.id} className="p-4 flex justify-between items-center hover:bg-brand-50/30 transition-colors">
+                <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-brand-800 text-sm">{appt.paciente?.nombres} {appt.paciente?.apellidos}</h3>
+                    <span className={`clay-badge text-xs border ${STATUS_STYLES[appt.estado] || 'bg-gray-50 text-gray-600 border-gray-200'}`}>
+                      {appointmentStatuses.find(s => s.value === appt.estado)?.label || appt.estado}
+                    </span>
                   </div>
-                  {appt.notas && <p className="text-sm mt-1 text-gray-500 bg-gray-50 p-2 rounded">{appt.notas}</p>}
+                  <p className="text-sm text-brand-500">{appt.servicio?.nombre || 'Servicio'}</p>
+                  <div className="text-xs text-brand-400 flex items-center gap-3">
+                    <span className="flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {appt.fecha_hora}</span>
+                    <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {appt.hora}</span>
+                  </div>
+                  {appt.notas && <p className="text-xs mt-1 text-brand-500 bg-brand-50/50 p-2 rounded-[8px]">{appt.notas}</p>}
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className={`text-xs font-medium px-3 py-1 rounded-full ${STATUS_COLORS[appt.estado] || 'bg-gray-100 text-gray-800'}`}>
-                    {appointmentStatuses.find(s => s.value === appt.estado)?.label || appt.estado}
-                  </span>
+                <div className="flex items-center gap-1 shrink-0 ml-3">
                   {(appt.estado === 'PEND' || appt.estado === 'RETR') && (
                     <>
-                      <button onClick={() => handleStatusChange(appt, 'REAL')} className="btn-icon" title="Marcar como realizada">
-                        <CheckCircle className="text-green-600 hover:text-green-800" />
+                      <button onClick={() => handleStatusChange(appt, 'REAL')} className="btn-icon p-2 text-accent-500 hover:text-accent-700 hover:bg-accent-50 rounded-[8px]" title="Marcar como realizada">
+                        <CheckCircle className="h-5 w-5" />
                       </button>
-                      <button onClick={() => handleStatusChange(appt, 'CANC')} className="btn-icon" title="Cancelar">
-                        <XCircle className="text-red-600 hover:text-red-800" />
+                      <button onClick={() => handleStatusChange(appt, 'CANC')} className="btn-icon p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-[8px]" title="Cancelar">
+                        <XCircle className="h-5 w-5" />
                       </button>
                     </>
                   )}
                   <button
                     onClick={() => handleEditAppointment(appt)}
-                    className="btn-icon"
+                    className="btn-icon p-2 rounded-[8px]"
                     title={appt.estado === 'PEND' || appt.estado === 'RETR' ? 'Editar' : 'No editable'}
                   >
-                    <Edit className={`${appt.estado === 'PEND' || appt.estado === 'RETR' ? 'text-emerald-600 hover:text-emerald-800' : 'text-gray-400 cursor-not-allowed'}`} />
+                    <Edit className={`h-5 w-5 ${appt.estado === 'PEND' || appt.estado === 'RETR' ? 'text-brand-500 hover:text-brand-700' : 'text-gray-300 cursor-not-allowed'}`} />
                   </button>
                 </div>
               </div>

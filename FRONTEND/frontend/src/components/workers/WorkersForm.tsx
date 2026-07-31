@@ -108,50 +108,50 @@ export default function WorkerForm({ worker, onSave, onCancel }: WorkerFormProps
       <div className="flex items-center space-x-4">
         <button
           onClick={onCancel}
-          className="btn-icon p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg"
+          className="btn-icon p-2 text-brand-400 hover:text-brand-600 hover:bg-brand-50 rounded-[12px] transition-all duration-150"
         >
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-heading font-bold text-brand-800">
           {worker ? 'Editar Colaborador' : 'Nuevo Colaborador'}
         </h2>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="clay-card p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Información Personal</h3>
+          <h3 className="text-lg font-heading font-semibold text-brand-700">Información Personal</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nombres *</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Nombres *</label>
               <input
                 type="text"
                 name="nombres"
                 value={formData.nombres}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.nombres ? 'border-red-500' : 'border-gray-300'}`}
+                className={`clay-input ${errors.nombres ? 'clay-input-error' : ''}`}
               />
-              {errors.nombres && <p className="text-sm text-red-600">{errors.nombres}</p>}
+              {errors.nombres && <p className="text-sm text-red-500 mt-1">{errors.nombres}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Apellidos *</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Apellidos *</label>
               <input
                 type="text"
                 name="apellidos"
                 value={formData.apellidos}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.apellidos ? 'border-red-500' : 'border-gray-300'}`}
+                className={`clay-input ${errors.apellidos ? 'clay-input-error' : ''}`}
               />
-              {errors.apellidos && <p className="text-sm text-red-600">{errors.apellidos}</p>}
+              {errors.apellidos && <p className="text-sm text-red-500 mt-1">{errors.apellidos}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Documento *</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Tipo de Documento *</label>
               <select
                 name="tipo_documento"
                 value={formData.tipo_documento}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.tipo_documento ? 'border-red-500' : 'border-gray-300'}`}
+                className={`clay-input ${errors.tipo_documento ? 'clay-input-error' : ''}`}
               >
                 <option value="">Selecciona un tipo</option>
                 {documentTypes.map((tipo) => (
@@ -160,45 +160,45 @@ export default function WorkerForm({ worker, onSave, onCancel }: WorkerFormProps
                   </option>
                 ))}
               </select>
-              {errors.tipo_documento && <p className="text-sm text-red-600">{errors.tipo_documento}</p>}
+              {errors.tipo_documento && <p className="text-sm text-red-500 mt-1">{errors.tipo_documento}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Número de Documento *</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Número de Documento *</label>
               <input
                 type="text"
                 name="numero_documento"
                 value={formData.numero_documento}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.numero_documento ? 'border-red-500' : 'border-gray-300'}`}
+                className={`clay-input ${errors.numero_documento ? 'clay-input-error' : ''}`}
               />
-              {errors.numero_documento && <p className="text-sm text-red-600">{errors.numero_documento}</p>}
+              {errors.numero_documento && <p className="text-sm text-red-500 mt-1">{errors.numero_documento}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Celular *</label>
+              <label className="block text-sm font-medium text-brand-700 mb-1.5">Celular *</label>
               <input
                 type="text"
                 name="celular"
                 value={formData.celular}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-lg ${errors.celular ? 'border-red-500' : 'border-gray-300'}`}
+                className={`clay-input ${errors.celular ? 'clay-input-error' : ''}`}
               />
-              {errors.celular && <p className="text-sm text-red-600">{errors.celular}</p>}
+              {errors.celular && <p className="text-sm text-red-500 mt-1">{errors.celular}</p>}
             </div>
           </div>
 
-          <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+          <div className="flex justify-end space-x-4 pt-6 border-t border-brand-100">
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+              className="clay-btn-secondary bg-white text-brand-600 border border-brand-200 px-4 py-2"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="btn px-4 py-2 bg-emerald-500 text-white hover:bg-emerald-600 rounded-lg flex items-center space-x-2"
+              className="clay-btn bg-gradient-to-b from-brand-400 to-brand-500 text-white font-heading font-semibold px-4 py-2 flex items-center space-x-2"
             >
               <Save className="h-4 w-4" />
               <span>Guardar</span>

@@ -27,14 +27,16 @@ export default function InstallPrompt() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 flex items-center justify-between bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-lg max-w-md mx-auto">
+    <div className="fixed bottom-4 left-4 right-4 z-50 flex items-center justify-between clay-card px-4 py-3 max-w-md mx-auto shadow-[0_8px_24px_rgba(14,165,233,0.1),-4px_-4px_12px_rgba(255,255,255,0.7)]">
       <div className="flex items-center gap-3">
-        <Download className="h-5 w-5" />
-        <p className="text-sm font-medium">Instala la app para acceso rápido</p>
+        <div className="bg-gradient-to-br from-brand-400 to-brand-500 p-2 rounded-[10px] shadow-[0_2px_8px_rgba(14,165,233,0.2),inset_0_1px_0_rgba(255,255,255,0.3)]">
+          <Download className="h-5 w-5 text-white" />
+        </div>
+        <p className="text-sm font-medium text-brand-800">Instala la app para acceso rápido</p>
       </div>
       <button
         onClick={handleInstall}
-        className="bg-white text-emerald-700 px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-all duration-200"
+        className="clay-btn px-4 py-1.5 bg-gradient-to-b from-brand-400 to-brand-500 text-white text-sm font-semibold"
       >
         Instalar
       </button>

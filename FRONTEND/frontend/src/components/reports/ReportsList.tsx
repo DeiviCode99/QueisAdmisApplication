@@ -50,33 +50,35 @@ export default function ReportsList() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader className="h-8 w-8 animate-spin text-emerald-500" />
+        <Loader className="h-8 w-8 animate-spin text-brand-500" />
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-800">Reportes mensuales</h2>
+      <h2 className="text-2xl font-heading font-bold text-brand-800">Reportes mensuales</h2>
       {months.length === 0 ? (
-        <div className="bg-white rounded-xl shadow p-8 text-center text-gray-500">
-          <FileText className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-          <p>No hay datos para generar reportes.</p>
+        <div className="clay-card p-8 text-center">
+          <div className="bg-brand-50 p-4 rounded-[14px] inline-flex mb-3">
+            <FileText className="h-10 w-10 text-brand-400" />
+          </div>
+          <p className="text-brand-500">No hay datos para generar reportes.</p>
         </div>
       ) : (
         <div className="grid gap-4">
           {months.map((mes) => (
             <div
               key={String(mes.mes)}
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex items-center justify-between hover:shadow-md transition-all duration-200"
+              className="clay-card p-5 flex items-center justify-between clay-card-hover"
             >
-              <div className="flex items-center space-x-4">
-                <div className="bg-emerald-100 p-3 rounded-lg">
-                  <FileText className="h-6 w-6 text-emerald-600" />
+              <div className="flex items-center gap-4">
+                <div className="bg-brand-50 p-3 rounded-[12px] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+                  <FileText className="h-6 w-6 text-brand-500" />
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-800">{mes.label}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-heading font-semibold text-brand-800">{mes.label}</p>
+                  <p className="text-sm text-brand-500">
                     {mes.total_citas} citas &middot; {formatIngresos(mes.ingresos)}
                   </p>
                 </div>
@@ -84,7 +86,7 @@ export default function ReportsList() {
               <button
                 onClick={() => handleDownload(mes.mes)}
                 disabled={downloading === mes.mes}
-                className="btn flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white px-4 py-2 rounded-lg transition-all duration-200"
+                className="clay-btn flex items-center gap-2 bg-gradient-to-b from-brand-400 to-brand-500 text-white px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {downloading === mes.mes ? (
                   <Loader className="h-4 w-4 animate-spin" />

@@ -122,13 +122,13 @@ export default function TreatmentsList() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Tratamientos</h2>
+        <h2 className="text-2xl font-heading font-bold text-brand-800">Tratamientos</h2>
         <div className="flex items-center gap-2">
           <button onClick={() => setShowInactivos(!showInactivos)}
-            className={`btn px-3 py-2 rounded-lg flex items-center gap-1.5 text-sm transition-colors ${showInactivos ? 'bg-amber-100 text-amber-800' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+            className={`clay-btn-secondary px-3 py-2 flex items-center gap-1.5 text-sm transition-all duration-200 ${showInactivos ? 'bg-amber-50 text-amber-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
             <Filter className="h-4 w-4" /> Inactivos
           </button>
-          <button onClick={handleNew} className="btn bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors flex items-center space-x-2">
+          <button onClick={handleNew} className="clay-btn px-4 py-2 bg-gradient-to-b from-brand-400 to-brand-500 text-white flex items-center gap-2">
             <Plus className="h-5 w-5" /><span>Nuevo Tratamiento</span>
           </button>
         </div>
@@ -140,58 +140,60 @@ export default function TreatmentsList() {
         </div>
       ) : treatments.length === 0 ? (
         <EmptyState icon={Plus} title="No hay tratamientos registrados" description="Crea un nuevo tratamiento para comenzar" action={
-          <button onClick={handleNew} className="btn bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600">Nuevo Tratamiento</button>
+          <button onClick={handleNew} className="clay-btn px-4 py-2 bg-gradient-to-b from-brand-400 to-brand-500 text-white">Nuevo Tratamiento</button>
         } />
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="clay-card overflow-hidden">
           <table className="w-full table-auto hidden md:table">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-brand-50/70 border-b border-brand-100/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Duración</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Descripción</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                <th className="px-6 py-3 text-left text-xs font-heading font-semibold text-brand-600 uppercase">Nombre</th>
+                <th className="px-6 py-3 text-left text-xs font-heading font-semibold text-brand-600 uppercase">Duración</th>
+                <th className="px-6 py-3 text-left text-xs font-heading font-semibold text-brand-600 uppercase">Descripción</th>
+                <th className="px-6 py-3 text-right text-xs font-heading font-semibold text-brand-600 uppercase">Acciones</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-brand-50">
               {paginatedTreatments.map((treatment) => (
-                <tr key={treatment.id} className={`${!treatment.activo ? 'opacity-50' : ''}`}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <tr key={treatment.id} className={`${!treatment.activo ? 'opacity-50' : ''} hover:bg-brand-50/30 transition-colors`}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-800">
                     {treatment.nombre}
-                    {!treatment.activo && <span className="ml-2 text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-medium">Inactivo</span>}
+                    {!treatment.activo && <span className="ml-2 clay-badge text-xs bg-red-50 text-red-700 border border-red-200">Inactivo</span>}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{treatment.duracion} min</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{treatment.descripcion}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                    <button onClick={() => handleEdit(treatment)} className="btn-icon text-emerald-600 hover:text-emerald-900 p-2"><Edit className="h-5 w-5" /></button>
-                    {treatment.activo ? (
-                      <button onClick={() => confirmDeleteTreatment(treatment)} className="btn-icon text-red-600 hover:text-red-900 p-2"><Ban className="h-5 w-5" /></button>
-                    ) : (
-                      <button onClick={() => handleRestore(treatment)} className="btn-icon text-emerald-600 hover:text-emerald-900 p-2"><RotateCcw className="h-5 w-5" /></button>
-                    )}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-500">{treatment.duracion} min</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-500">{treatment.descripcion}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="flex justify-end gap-1">
+                      <button onClick={() => handleEdit(treatment)} className="btn-icon p-2 text-brand-500 hover:text-brand-700 hover:bg-brand-50 rounded-[8px]"><Edit className="h-5 w-5" /></button>
+                      {treatment.activo ? (
+                        <button onClick={() => confirmDeleteTreatment(treatment)} className="btn-icon p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-[8px]"><Ban className="h-5 w-5" /></button>
+                      ) : (
+                        <button onClick={() => handleRestore(treatment)} className="btn-icon p-2 text-accent-500 hover:text-accent-700 hover:bg-accent-50 rounded-[8px]"><RotateCcw className="h-5 w-5" /></button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="block md:hidden divide-y divide-gray-200">
+          <div className="block md:hidden divide-y divide-brand-50">
             {paginatedTreatments.map((treatment) => (
-              <div key={treatment.id} className={`p-4 hover:bg-brand-50 transition-colors ${!treatment.activo ? 'opacity-50' : ''}`}>
+              <div key={treatment.id} className={`p-4 hover:bg-brand-50/30 transition-colors ${!treatment.activo ? 'opacity-50' : ''}`}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-brand-800 text-sm">
                       {treatment.nombre}
-                      {!treatment.activo && <span className="ml-2 text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-medium">Inactivo</span>}
+                      {!treatment.activo && <span className="ml-2 clay-badge text-xs bg-red-50 text-red-700 border border-red-200">Inactivo</span>}
                     </p>
-                    <p className="text-sm text-gray-500 mt-0.5">{treatment.duracion} min</p>
-                    {treatment.descripcion && <p className="text-sm text-gray-500 truncate">{treatment.descripcion}</p>}
+                    <p className="text-sm text-brand-500 mt-0.5">{treatment.duracion} min</p>
+                    {treatment.descripcion && <p className="text-sm text-brand-400 truncate">{treatment.descripcion}</p>}
                   </div>
                   <div className="flex items-center gap-1 shrink-0">
-                    <button onClick={() => handleEdit(treatment)} className="btn-icon p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg" title="Editar"><Edit className="h-5 w-5" /></button>
+                    <button onClick={() => handleEdit(treatment)} className="btn-icon p-2 text-brand-500 hover:bg-brand-50 rounded-[8px]" title="Editar"><Edit className="h-5 w-5" /></button>
                     {treatment.activo ? (
-                      <button onClick={() => confirmDeleteTreatment(treatment)} className="btn-icon p-2 text-red-600 hover:bg-red-50 rounded-lg" title="Deshabilitar"><Ban className="h-5 w-5" /></button>
+                      <button onClick={() => confirmDeleteTreatment(treatment)} className="btn-icon p-2 text-red-500 hover:bg-red-50 rounded-[8px]" title="Deshabilitar"><Ban className="h-5 w-5" /></button>
                     ) : (
-                      <button onClick={() => handleRestore(treatment)} className="btn-icon p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg" title="Reactivar"><RotateCcw className="h-5 w-5" /></button>
+                      <button onClick={() => handleRestore(treatment)} className="btn-icon p-2 text-accent-500 hover:bg-accent-50 rounded-[8px]" title="Reactivar"><RotateCcw className="h-5 w-5" /></button>
                     )}
                   </div>
                 </div>
@@ -203,13 +205,13 @@ export default function TreatmentsList() {
       )}
 
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-end md:items-center justify-center modal-overlay-enter">
-          <div className="bg-white w-full max-w-md rounded-t-2xl md:rounded-lg p-6 max-h-[90vh] overflow-y-auto modal-enter">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">¿Deshabilitar Tratamiento?</h3>
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end md:items-center justify-center modal-overlay-enter">
+          <div className="clay-card w-full max-w-md rounded-t-[20px] md:rounded-[16px] p-6 max-h-[90vh] overflow-y-auto modal-enter">
+            <h3 className="text-lg font-heading font-semibold text-brand-800 mb-4">¿Deshabilitar Tratamiento?</h3>
             <p className="text-sm text-gray-600 mb-6">¿Estás seguro de deshabilitar el tratamiento <strong>{treatmentToDelete?.nombre}</strong>? Podrás reactivarlo después.</p>
-            <div className="flex justify-end gap-4">
-              <button onClick={() => setShowDeleteModal(false)} className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Cancelar</button>
-              <button onClick={handleDeleteConfirmed} className="btn px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Deshabilitar</button>
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setShowDeleteModal(false)} className="clay-btn-secondary px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200">Cancelar</button>
+              <button onClick={handleDeleteConfirmed} className="clay-btn px-4 py-2 bg-gradient-to-b from-red-400 to-red-500 text-white">Deshabilitar</button>
             </div>
           </div>
         </div>
