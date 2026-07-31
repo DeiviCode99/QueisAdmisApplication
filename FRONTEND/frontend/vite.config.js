@@ -7,12 +7,12 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon_nav.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
+      includeAssets: ['icon_nav.svg', 'logo.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
-        name: 'Belleza Plena SPA',
-        short_name: 'Belleza Plena',
-        description: 'Sistema de gestión para SPA Belleza Plena',
-        theme_color: '#10b981',
+        name: 'Quies Admin',
+        short_name: 'Quies Admin',
+        description: 'Gestión inteligente para SPA',
+        theme_color: '#0ea5e9',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait-primary',
