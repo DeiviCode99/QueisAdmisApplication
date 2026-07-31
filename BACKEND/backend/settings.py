@@ -14,6 +14,8 @@ env = environ.Env(
     SUPABASE_PROJECT_REF=(str, ''),
     SUPABASE_ANON_KEY=(str, ''),
     SUPABASE_SERVICE_ROLE=(str, ''),
+    VAPID_PRIVATE_KEY=(str, ''),
+    VAPID_PUBLIC_KEY=(str, ''),
 )
 
 environ.Env.read_env(BASE_DIR / '.env')
