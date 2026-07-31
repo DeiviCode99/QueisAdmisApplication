@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Calendar, Users, FileText, BarChart3, Settings, FileBarChart, X, Sparkles, type LucideIcon } from 'lucide-react';
+import { Calendar, Users, FileText, BarChart3, Settings, FileBarChart, X, type LucideIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Logo from "../../assets/icon.png"
 
 interface MenuItem {
   path: string;
@@ -56,8 +57,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       >
         <div className="flex items-center justify-between p-6 border-b border-brand-100/50">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-[10px] bg-gradient-to-br from-brand-400 to-brand-600 shadow-[0_4px_8px_rgba(14,165,233,0.25),inset_0_1px_0_rgba(255,255,255,0.3)] flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-white" />
+            <div className="w-20 h-20 flex items-center justify-center">
+              <img src={Logo}/>
             </div>
             <div>
               <span className="font-heading font-bold text-brand-800 text-lg leading-tight block">Queis Admin</span>
