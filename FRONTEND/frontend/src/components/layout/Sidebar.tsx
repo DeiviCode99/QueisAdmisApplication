@@ -61,7 +61,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               <img src={Logo}/>
             </div>
             <div>
-              <span className="font-heading font-bold text-brand-800 text-lg leading-tight block">Queis Admin</span>
+              <span className="font-heading font-bold text-brand-800 text-lg leading-tight block">Quies Admin</span>
               <span className="text-[10px] text-brand-500 font-medium tracking-wide">SPA Management</span>
             </div>
           </div>
